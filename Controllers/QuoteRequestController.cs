@@ -22,6 +22,12 @@ namespace ProjektDT191G.Controllers
         // GET: QuoteRequest
         public async Task<IActionResult> Index()
         {
+            // Kontroll om null-värde
+            if (_context.QuoteRequests == null)
+            {
+                return NotFound();
+            }
+
             var applicationDbContext = _context.QuoteRequests.Include(q => q.Lecture).Include(q => q.Speaker);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -30,6 +36,12 @@ namespace ProjektDT191G.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
+            {
+                return NotFound();
+            }
+
+            // Kontroll om null-värde
+            if (_context.QuoteRequests == null)
             {
                 return NotFound();
             }
@@ -76,6 +88,12 @@ namespace ProjektDT191G.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
+            {
+                return NotFound();
+            }
+
+            // Kontroll om null-värde
+            if (_context.QuoteRequests == null)
             {
                 return NotFound();
             }
@@ -135,6 +153,12 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
+            // Kontroll om null-värde
+            if (_context.QuoteRequests == null)
+            {
+                return NotFound();
+            }
+
             var quoteRequest = await _context.QuoteRequests
                 .Include(q => q.Lecture)
                 .Include(q => q.Speaker)
@@ -152,6 +176,12 @@ namespace ProjektDT191G.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // Kontroll om null-värde
+            if (_context.QuoteRequests == null)
+            {
+                return NotFound();
+            }
+
             var quoteRequest = await _context.QuoteRequests.FindAsync(id);
             if (quoteRequest != null)
             {
@@ -164,6 +194,12 @@ namespace ProjektDT191G.Controllers
 
         private bool QuoteRequestExists(int id)
         {
+            // Kontroll om null-värde
+            if (_context.QuoteRequests == null)
+            {
+                return false;
+            }
+
             return _context.QuoteRequests.Any(e => e.QuoteRequestId == id);
         }
     }

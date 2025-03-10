@@ -22,6 +22,12 @@ namespace ProjektDT191G.Controllers
         // GET: Lecture
         public async Task<IActionResult> Index()
         {
+            // Kontroll om null-värde
+            if (_context.Lectures == null)
+            {
+                return NotFound();
+            }
+
             var applicationDbContext = _context.Lectures.Include(l => l.Category);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -30,6 +36,12 @@ namespace ProjektDT191G.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
+            {
+                return NotFound();
+            }
+
+            // Kontroll om null-värde
+            if (_context.Lectures == null)
             {
                 return NotFound();
             }
@@ -73,6 +85,12 @@ namespace ProjektDT191G.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
+            {
+                return NotFound();
+            }
+
+            // Kontroll om null-värde
+            if (_context.Lectures == null)
             {
                 return NotFound();
             }
@@ -130,6 +148,12 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
+            // Kontroll om null-värde
+            if (_context.Lectures == null)
+            {
+                return NotFound();
+            }
+
             var lecture = await _context.Lectures
                 .Include(l => l.Category)
                 .FirstOrDefaultAsync(m => m.LectureId == id);
@@ -146,6 +170,12 @@ namespace ProjektDT191G.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // Kontroll om null-värde
+            if (_context.Lectures == null)
+            {
+                return NotFound();
+            }
+
             var lecture = await _context.Lectures.FindAsync(id);
             if (lecture != null)
             {
@@ -158,6 +188,12 @@ namespace ProjektDT191G.Controllers
 
         private bool LectureExists(int id)
         {
+            // Kontroll om null-värde
+            if (_context.Lectures == null)
+            {
+                return false;
+            }
+
             return _context.Lectures.Any(e => e.LectureId == id);
         }
     }

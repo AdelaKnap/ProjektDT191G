@@ -22,6 +22,12 @@ namespace ProjektDT191G.Controllers
         // GET: Speaker
         public async Task<IActionResult> Index()
         {
+            // Kontroll om null-värde
+            if (_context.Speakers == null)
+            {
+                return NotFound();
+            }
+
             return View(await _context.Speakers.ToListAsync());
         }
 
@@ -29,6 +35,12 @@ namespace ProjektDT191G.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
+            {
+                return NotFound();
+            }
+
+            // Kontroll om null-värde
+            if (_context.Speakers == null)
             {
                 return NotFound();
             }
@@ -69,6 +81,12 @@ namespace ProjektDT191G.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
+            {
+                return NotFound();
+            }
+
+            // Kontroll om null-värde
+            if (_context.Speakers == null)
             {
                 return NotFound();
             }
@@ -124,6 +142,12 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
+            // Kontroll om null-värde
+            if (_context.Speakers == null)
+            {
+                return NotFound();
+            }
+
             var speaker = await _context.Speakers
                 .FirstOrDefaultAsync(m => m.SpeakerId == id);
             if (speaker == null)
@@ -139,6 +163,12 @@ namespace ProjektDT191G.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // Kontroll om null-värde
+            if (_context.Speakers == null)
+            {
+                return NotFound();
+            }
+
             var speaker = await _context.Speakers.FindAsync(id);
             if (speaker != null)
             {
@@ -151,6 +181,12 @@ namespace ProjektDT191G.Controllers
 
         private bool SpeakerExists(int id)
         {
+            // Kontroll om null-värde
+            if (_context.Speakers == null)
+            {
+                return false;
+            }
+
             return _context.Speakers.Any(e => e.SpeakerId == id);
         }
     }

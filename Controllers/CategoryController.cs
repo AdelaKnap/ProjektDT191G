@@ -22,6 +22,12 @@ namespace ProjektDT191G.Controllers
         // GET: Category
         public async Task<IActionResult> Index()
         {
+            // Kontroll om null-värde
+            if (_context.Categories == null)
+            {
+                return NotFound();
+            }
+
             return View(await _context.Categories.ToListAsync());
         }
 
@@ -33,8 +39,15 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
+            // Kontroll om null-värde
+            if (_context.Categories == null)
+            {
+                return NotFound();
+            }
+
             var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
+
             if (category == null)
             {
                 return NotFound();
@@ -69,6 +82,12 @@ namespace ProjektDT191G.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
+            {
+                return NotFound();
+            }
+
+            // Kontroll om null-värde
+            if (_context.Categories == null)
             {
                 return NotFound();
             }
@@ -124,6 +143,12 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
+            // Kontroll om null-värde
+            if (_context.Categories == null)
+            {
+                return NotFound();
+            }
+
             var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
@@ -139,6 +164,12 @@ namespace ProjektDT191G.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // Kontroll om null-värde
+            if (_context.Categories == null)
+            {
+                return NotFound();
+            }
+
             var category = await _context.Categories.FindAsync(id);
             if (category != null)
             {
@@ -151,6 +182,12 @@ namespace ProjektDT191G.Controllers
 
         private bool CategoryExists(int id)
         {
+            // Kontroll om null-värde
+            if (_context.Categories == null)
+            {
+                return false;
+            }
+
             return _context.Categories.Any(e => e.CategoryId == id);
         }
     }
