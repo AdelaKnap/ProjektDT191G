@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using ProjektDT191G.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
@@ -42,5 +44,43 @@ app.MapControllerRoute(
 
 app.MapRazorPages()
    .WithStaticAssets();
+
+// Skapa roller och användare i scope med roleManager
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    // Skapa roller
+    var roles = new[] { "Administrator", "Speaker" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+
+    // Skapa användare med userManager
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+    var users = new[] {
+        new { Email = "adkn@student.miun.se", Password = "ProjektDT191G!", Role = "Administrator"},
+        new { Email = "adela@miun.se", Password = "ProjektDT191G!", Role = "Speaker"},
+    };
+
+    foreach (var user in users)
+    {
+        var identityUser = await userManager.FindByEmailAsync(user.Email);
+        if (identityUser == null)
+        {
+            identityUser = new IdentityUser { UserName = user.Email, Email = user.Email };
+            await userManager.CreateAsync(identityUser, user.Password);
+
+            // Tilldela roll
+            await userManager.AddToRoleAsync(identityUser, user.Role);
+        }
+    }
+}
 
 app.Run();
