@@ -26,32 +26,45 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                        </li>
-                        @if (SignInManager.IsSignedIn(User))
+                        @if (SignInManager.IsSignedIn(User))    // Om inloggad, gör om till som admin sen
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Lecture"
-                                    asp-action="Index">Lectures</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Category"
-                                    asp-action="Index">Categories</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Speaker"
-                                    asp-action="Index">Speakers</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Lecture" asp-action="Index">Lectures</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="QuoteRequest"
-                                    asp-action="Index">QuoteRequests</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Categories</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Speaker" asp-action="Index">Speakers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="QuoteRequest" asp-action="Index">QuoteRequests</a>
+                            </li>
+
                         }
-                    </ul>
+                        else // Ej inloggad, gör om till om inloggad bara med   @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Lecture" asp-action="Index">Lectures</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="QuoteRequest" asp-action="Index">QuoteRequests</a>
+                            </li>
+                        }      
+                        @* Lägg till en ej inloggad här med bara start och About kanske *@
+                    </ul>       
 
                     <partial name="_LoginPartial" />
                 </div>

@@ -75,6 +75,8 @@ namespace ProjektDT191G.Controllers
         {
             if (ModelState.IsValid)
             {
+                quoteRequest.RequestDate = DateTime.Now;
+
                 _context.Add(quoteRequest);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

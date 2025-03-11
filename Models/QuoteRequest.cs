@@ -25,7 +25,7 @@ namespace ProjektDT191G.Models
         [Display(Name = "Additional Message")]
         public string? Message { get; set; }
 
-        [Display(Name = "Request Submitted On")]
+        [Display(Name = "Request date")]
         public DateTime RequestDate { get; set; } = DateTime.Now;
 
         // Om offerten är behandlad eller inte, false från start
