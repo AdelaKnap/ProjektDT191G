@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: Speaker
+        [Authorize(Roles = "Administrator, Speaker")]   // Admin och Speaker ska komma åt get
         public async Task<IActionResult> Index()
         {
             // Kontroll om null-värde
@@ -32,6 +34,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: Speaker/Details/5
+        [Authorize(Roles = "Administrator, Speaker")]   // Admin och Speaker ska komma åt detaljer
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -56,16 +59,16 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: Speaker/Create
+        [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Speaker/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         public async Task<IActionResult> Create([Bind("SpeakerId,Name")] Speaker speaker)
         {
             if (ModelState.IsValid)
@@ -78,6 +81,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: Speaker/Edit/5
+        [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -100,10 +104,9 @@ namespace ProjektDT191G.Controllers
         }
 
         // POST: Speaker/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         public async Task<IActionResult> Edit(int id, [Bind("SpeakerId,Name")] Speaker speaker)
         {
             if (id != speaker.SpeakerId)
@@ -135,6 +138,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: Speaker/Delete/5
+        [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -161,6 +165,7 @@ namespace ProjektDT191G.Controllers
         // POST: Speaker/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             // Kontroll om null-värde

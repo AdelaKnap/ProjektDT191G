@@ -21,6 +21,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: Lecture
+        [Authorize(Roles = "Administrator, Speaker")]   // Admin och Speaker ska komma åt get
         public async Task<IActionResult> Index()
         {
             // Kontroll om null-värde
@@ -34,6 +35,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: Lecture/Details/5
+        [Authorize(Roles = "Administrator, Speaker")]   // Admin och Speaker ska komma åt get
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -59,6 +61,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: Lecture/Create
+        [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name");
@@ -66,10 +69,9 @@ namespace ProjektDT191G.Controllers
         }
 
         // POST: Lecture/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         public async Task<IActionResult> Create([Bind("LectureId,Name,Description,Price,CategoryId")] Lecture lecture)
         {
             if (ModelState.IsValid)
@@ -83,7 +85,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: Lecture/Edit/5
-        [Authorize]
+        [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -107,11 +109,9 @@ namespace ProjektDT191G.Controllers
         }
 
         // POST: Lecture/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         public async Task<IActionResult> Edit(int id, [Bind("LectureId,Name,Description,Price,CategoryId")] Lecture lecture)
         {
             if (id != lecture.LectureId)
@@ -144,7 +144,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: Lecture/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -170,7 +170,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // POST: Lecture/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

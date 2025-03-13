@@ -6,9 +6,13 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -43,41 +47,48 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Message)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsProcessed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lecture.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Speaker.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.QuoteRequestId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.QuoteRequestId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.QuoteRequestId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Message)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsProcessed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lecture.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Speaker.Name)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.LectureId">Details</a>
+
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <span> | </span>
+                        <a asp-action="Edit" asp-route-id="@item.QuoteRequestId">Edit</a>
+                        <span> | </span>
+                        <a asp-action="Delete" asp-route-id="@item.QuoteRequestId">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

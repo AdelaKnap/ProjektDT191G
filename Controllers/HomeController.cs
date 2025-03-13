@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjektDT191G.Models;
 
@@ -20,6 +21,7 @@ public class HomeController : Controller
     }
 
     // About page
+    [Authorize]
     public IActionResult About()
     {
         return View();

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: QuoteRequest
+        [Authorize(Roles = "Administrator, Speaker")]   // Admin och Speaker ska komma åt get
         public async Task<IActionResult> Index()
         {
             // Kontroll om null-värde
@@ -33,6 +35,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: QuoteRequest/Details/5
+        [Authorize(Roles = "Administrator, Speaker")]   // Admin och Speaker ska komma åt get
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -67,8 +70,6 @@ namespace ProjektDT191G.Controllers
         }
 
         // POST: QuoteRequest/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("QuoteRequestId,Name,Email,Phone,Address,Message,RequestDate,IsProcessed,LectureId,SpeakerId")] QuoteRequest quoteRequest)
@@ -79,14 +80,21 @@ namespace ProjektDT191G.Controllers
 
                 _context.Add(quoteRequest);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Confirmation");   // Skicka till bekräftelse-sida efter skapad offert
             }
             ViewData["LectureId"] = new SelectList(_context.Lectures, "LectureId", "Description", quoteRequest.LectureId);
             ViewData["SpeakerId"] = new SelectList(_context.Speakers, "SpeakerId", "Name", quoteRequest.SpeakerId);
             return View(quoteRequest);
         }
 
+        // GET: QuoteRequest/Confirmation för att returnera Confirmations-vyn
+        public IActionResult Confirmation()
+        {
+            return View();  
+        }
+
         // GET: QuoteRequest/Edit/5
+        [Authorize(Roles = "Administrator")]   // Admin har åtkomst
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -111,8 +119,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // POST: QuoteRequest/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]   // Admin har åtkomst
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("QuoteRequestId,Name,Email,Phone,Address,Message,RequestDate,IsProcessed,LectureId,SpeakerId")] QuoteRequest quoteRequest)
@@ -148,6 +155,7 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: QuoteRequest/Delete/5
+        [Authorize(Roles = "Administrator")]   // Admin har åtkomst
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -176,6 +184,7 @@ namespace ProjektDT191G.Controllers
         // POST: QuoteRequest/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]   // Admin har åtkomst
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             // Kontroll om null-värde

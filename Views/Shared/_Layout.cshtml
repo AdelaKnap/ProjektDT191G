@@ -2,6 +2,14 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var isAdmin = user != null && await UserManager.IsInRoleAsync(user, "Administrator");
+    var isSpeaker = user != null && await UserManager.IsInRoleAsync(user, "Speaker");
+    var isSignedIn = SignInManager.IsSignedIn(User);
+}
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,46 +33,31 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        @if (SignInManager.IsSignedIn(User))    // Om inloggad, gör om till som admin sen
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Lecture" asp-action="Index">Lectures</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Categories</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Speaker" asp-action="Index">Speakers</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="QuoteRequest" asp-action="Index">QuoteRequests</a>
-                            </li>
+                        <ul class="navbar-nav flex-grow-1">
 
-                        }
-                        else // Ej inloggad, gör om till om inloggad bara med   @if (SignInManager.IsSignedIn(User))
+                        @if (isAdmin || isSpeaker)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Lecture" asp-action="Index">Lectures</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="QuoteRequest" asp-action="Index">QuoteRequests</a>
-                            </li>
-                        }      
-                        @* Lägg till en ej inloggad här med bara start och About kanske *@
-                    </ul>       
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home" asp-action="About">About</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Lecture" asp-action="Index">Lectures</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Category" asp-action="Index">Categories</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Speaker" asp-action="Index">Speakers</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="QuoteRequest" asp-action="Index">QuoteRequests</a></li>
+                        }
+
+                        @if (isSignedIn)
+                        {
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home" asp-action="About">About</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="QuoteRequest" asp-action="Create">QuoteRequests</a></li>
+                        }
+                        else
+                        {
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="QuoteRequest" asp-action="Create">QuoteRequests</a></li>
+                        }
+
+                    </ul>
 
                     <partial name="_LoginPartial" />
                 </div>

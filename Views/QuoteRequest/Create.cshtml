@@ -42,19 +42,19 @@
                 <input asp-for="RequestDate" class="form-control" />
                 <span asp-validation-for="RequestDate" class="text-danger"></span>
             </div> *@
-            <div class="form-group form-check">
+            @* <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsProcessed" /> @Html.DisplayNameFor(model => model.IsProcessed)
                 </label>
-            </div>
+            </div> *@
             <div class="form-group">
                 <label asp-for="LectureId" class="control-label"></label>
                 <select asp-for="LectureId" class ="form-control" asp-items="ViewBag.LectureId"></select>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="SpeakerId" class="control-label"></label>
                 <select asp-for="SpeakerId" class ="form-control" asp-items="ViewBag.SpeakerId"></select>
-            </div>
+            </div> *@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
