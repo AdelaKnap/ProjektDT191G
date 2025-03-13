@@ -174,13 +174,35 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
-            var speaker = await _context.Speakers.FindAsync(id);
+            // var speaker = await _context.Speakers.FindAsync(id);
+            // if (speaker != null)
+            // {
+            //     _context.Speakers.Remove(speaker);
+            // }
+
+            // await _context.SaveChangesAsync();
+            // return RedirectToAction(nameof(Index));
+
+                var speaker = await _context.Speakers
+                .Include(q => q.QuoteRequests)          // Offerter kopplade till föreläsaren
+                .FirstOrDefaultAsync(q => q.SpeakerId == id);
+
             if (speaker != null)
             {
+                // Kolla om det finns offerter kopplade till föreläsarn och sätt till null som blir Ej tillsatt
+                if (speaker.QuoteRequests != null)
+                {
+                    foreach (var quoteRequest in speaker.QuoteRequests)
+                    {
+                        quoteRequest.SpeakerId = null;
+                        quoteRequest.Speaker = null;
+                    }
+                }
+
                 _context.Speakers.Remove(speaker);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

@@ -72,11 +72,10 @@
                     @Html.DisplayFor(modelItem => item.IsProcessed)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Lecture.Description)
+                    @Html.DisplayFor(modelItem => item.Lecture.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Speaker.Name)
-                </td>
+                    @(item.Speaker?.Name ?? "Ej tilsatt")</td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.LectureId">Details</a>
 

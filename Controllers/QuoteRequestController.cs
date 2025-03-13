@@ -64,15 +64,15 @@ namespace ProjektDT191G.Controllers
         // GET: QuoteRequest/Create
         public IActionResult Create()
         {
-            ViewData["LectureId"] = new SelectList(_context.Lectures, "LectureId", "Description");
-            ViewData["SpeakerId"] = new SelectList(_context.Speakers, "SpeakerId", "Name");
+            ViewData["LectureId"] = new SelectList(_context.Lectures, "LectureId", "Name");
+            ViewData["SpeakerId"] = new SelectList(_context.Speakers, "SpeakerId", "Name", null);
             return View();
         }
 
         // POST: QuoteRequest/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("QuoteRequestId,Name,Email,Phone,Address,Message,RequestDate,IsProcessed,LectureId,SpeakerId")] QuoteRequest quoteRequest)
+        public async Task<IActionResult> Create([Bind("QuoteRequestId,Name,Email,Phone,Address,Message,RequestDate,LectureId")] QuoteRequest quoteRequest)
         {
             if (ModelState.IsValid)
             {
@@ -82,15 +82,15 @@ namespace ProjektDT191G.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Confirmation");   // Skicka till bekräftelse-sida efter skapad offert
             }
-            ViewData["LectureId"] = new SelectList(_context.Lectures, "LectureId", "Description", quoteRequest.LectureId);
-            ViewData["SpeakerId"] = new SelectList(_context.Speakers, "SpeakerId", "Name", quoteRequest.SpeakerId);
+            ViewData["LectureId"] = new SelectList(_context.Lectures, "LectureId", "Name", quoteRequest.LectureId);
+
             return View(quoteRequest);
         }
 
         // GET: QuoteRequest/Confirmation för att returnera Confirmations-vyn
         public IActionResult Confirmation()
         {
-            return View();  
+            return View();
         }
 
         // GET: QuoteRequest/Edit/5
@@ -102,7 +102,6 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
-            // Kontroll om null-värde
             if (_context.QuoteRequests == null)
             {
                 return NotFound();
@@ -113,10 +112,28 @@ namespace ProjektDT191G.Controllers
             {
                 return NotFound();
             }
-            ViewData["LectureId"] = new SelectList(_context.Lectures, "LectureId", "Description", quoteRequest.LectureId);
-            ViewData["SpeakerId"] = new SelectList(_context.Speakers, "SpeakerId", "Name", quoteRequest.SpeakerId);
+
+            ViewData["LectureId"] = new SelectList(_context.Lectures, "LectureId", "Name", quoteRequest.LectureId);
+
+            if (_context.Speakers == null)
+            {
+                return NotFound();
+            }
+
+            // lista med alternativet "Ej tillsatt"
+            var speakers = _context.Speakers
+                .Select(s => new SelectListItem
+                {
+                    Value = s.SpeakerId.ToString(),
+                    Text = s.Name
+                }).ToList();
+            speakers.Insert(0, new SelectListItem { Value = "", Text = "Ej tillsatt" });
+
+            ViewData["SpeakerId"] = speakers;
+
             return View(quoteRequest);
         }
+
 
         // POST: QuoteRequest/Edit/5
         [Authorize(Roles = "Administrator")]   // Admin har åtkomst
@@ -149,7 +166,7 @@ namespace ProjektDT191G.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LectureId"] = new SelectList(_context.Lectures, "LectureId", "Description", quoteRequest.LectureId);
+            ViewData["LectureId"] = new SelectList(_context.Lectures, "LectureId", "Name", quoteRequest.LectureId);
             ViewData["SpeakerId"] = new SelectList(_context.Speakers, "SpeakerId", "Name", quoteRequest.SpeakerId);
             return View(quoteRequest);
         }

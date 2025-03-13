@@ -33,30 +33,43 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
-
+                    <ul class="navbar-nav flex-grow-1">
+                        <!-- Länkar som är tillgängliga för Admin och Speaker -->
                         @if (isAdmin || isSpeaker)
                         {
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home" asp-action="About">About</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Lecture" asp-action="Index">Lectures</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Category" asp-action="Index">Categories</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Speaker" asp-action="Index">Speakers</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="QuoteRequest" asp-action="Index">QuoteRequests</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home"
+                                    asp-action="Index">Home</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home"
+                                    asp-action="About">About</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Lecture"
+                                    asp-action="Index">Lectures</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Category"
+                                    asp-action="Index">Categories</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Speaker"
+                                    asp-action="Index">Speakers</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="QuoteRequest"
+                                    asp-action="Index">QuoteRequests</a></li>
                         }
 
-                        @if (isSignedIn)
+                        <!-- Länkar som är tillgängliga för inloggade användare -->
+                        @if (isSignedIn && !isAdmin && !isSpeaker)
                         {
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home" asp-action="About">About</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="QuoteRequest" asp-action="Create">QuoteRequests</a></li>
-                        }
-                        else
-                        {
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="QuoteRequest" asp-action="Create">QuoteRequests</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home"
+                                    asp-action="Index">Home</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home"
+                                    asp-action="About">About</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="QuoteRequest"
+                                    asp-action="Create">QuoteRequests</a></li>
                         }
 
+                        <!-- Länkar för icke-inloggade användare -->
+                        @if (!isSignedIn)
+                        {
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home"
+                                    asp-action="Index">Home</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="QuoteRequest"
+                                    asp-action="Create">QuoteRequests</a></li>
+                        }
                     </ul>
 
                     <partial name="_LoginPartial" />
