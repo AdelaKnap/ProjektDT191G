@@ -32,7 +32,7 @@
                 <td>
                     <a asp-action="Details" asp-route-id="@item.SpeakerId">Details</a>
 
-                    @if (User.IsInRole("Administrator"))
+                    @if (User.IsInRole("Administrator"))     @* Endast admin ska ha åtkomst *@
                     {
                         <span> | </span>
                         <a asp-action="Edit" asp-route-id="@item.SpeakerId">Edit</a>

@@ -22,7 +22,7 @@ namespace ProjektDT191G.Models
         [Display(Name = "Lecture Address")]
         public string? Address { get; set; }
 
-        [Display(Name = "Additional Message")]
+        [Display(Name = "Message")]
         public string? Message { get; set; }
 
         [Display(Name = "Request date")]
@@ -30,7 +30,7 @@ namespace ProjektDT191G.Models
 
         // Om offerten är behandlad eller inte, false från start
         [Required]
-        [Display(Name = "Request Processed")]
+        [Display(Name = "Processed")]
         public bool IsProcessed { get; set; } = false;
 
         // Koppling till föreläsning

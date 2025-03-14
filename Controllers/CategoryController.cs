@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjektDT191G.Data;
 using ProjektDT191G.Models;
@@ -175,13 +170,28 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
+            var category = await _context.Categories
+            .Include(c => c.Lectures)                       // Inkludera föreläsningar för att kunna kolla relationen
+            .FirstOrDefaultAsync(c => c.CategoryId == id);
+
+
+            if (category == null)
             {
-                _context.Categories.Remove(category);
+                return NotFound();
             }
 
+            // Kontrollera om kategorin har föreläsningar knutna till sig
+            if (category.Lectures != null && category.Lectures.Count != 0)
+            {
+                // Meddelande vid relation till lecture, ska ej gå att radera
+                TempData["ErrorMessage"] = "The category cannot be deleted because it has lectures associated with it!";
+
+                return View(category);  // Stanna kvar på delete-sidan
+            }
+
+            _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

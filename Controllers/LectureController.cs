@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -84,6 +80,7 @@ namespace ProjektDT191G.Controllers
             return View(lecture);
         }
 
+
         // GET: Lecture/Edit/5
         [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         public async Task<IActionResult> Edit(int? id)
@@ -104,7 +101,9 @@ namespace ProjektDT191G.Controllers
             {
                 return NotFound();
             }
+
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name", lecture.CategoryId);
+
             return View(lecture);
         }
 
@@ -181,14 +180,37 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
-            var lecture = await _context.Lectures.FindAsync(id);
-            if (lecture != null)
+            var lecture = await _context.Lectures
+            .Include(q => q.QuoteRequests)
+            .FirstOrDefaultAsync(l => l.LectureId == id);
+
+            if (lecture == null)
             {
-                _context.Lectures.Remove(lecture);
+                return NotFound();
             }
 
+            // Kontrollera om föreläsningen har offerter knutna till sig
+            if (lecture.QuoteRequests != null && lecture.QuoteRequests.Count != 0)
+            {
+                // Meddelande vid relation till offert, ska ej gå att radera
+                TempData["ErrorMessage"] = "The lecture cannot be deleted because it has QuoteRequests associated with it!";
+
+                return View(lecture);  // Stanna kvar på delete-sidan
+            }
+
+            _context.Lectures.Remove(lecture);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
+
+            // var lecture = await _context.Lectures.FindAsync(id);
+            // if (lecture != null)
+            // {
+            //     _context.Lectures.Remove(lecture);
+            // }
+
+            // await _context.SaveChangesAsync();
+            // return RedirectToAction(nameof(Index));
         }
 
         private bool LectureExists(int id)

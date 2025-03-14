@@ -45,12 +45,12 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
+                    @(item.Category?.Name ?? "Not assigned")
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.LectureId">Details</a>
 
-                    @if (User.IsInRole("Administrator"))
+                    @if (User.IsInRole("Administrator"))     @* Endast admin ska ha åtkomst *@
                     {
                         <span> | </span>
                         <a asp-action="Edit" asp-route-id="@item.LectureId">Edit</a>

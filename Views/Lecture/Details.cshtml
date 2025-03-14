@@ -37,7 +37,7 @@
     </dl>
 </div>
 <div>
-    @if (User.IsInRole("Administrator"))
+    @if (User.IsInRole("Administrator"))       @* Endast admin ska ha åtkomst *@
     {
         <a asp-action="Edit" asp-route-id="@Model?.LectureId">Edit</a>
         <span> | </span>

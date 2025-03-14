@@ -127,7 +127,7 @@ namespace ProjektDT191G.Controllers
                     Value = s.SpeakerId.ToString(),
                     Text = s.Name
                 }).ToList();
-            speakers.Insert(0, new SelectListItem { Value = "", Text = "Ej tillsatt" });
+            speakers.Insert(0, new SelectListItem { Value = "", Text = "Uncategorized" });
 
             ViewData["SpeakerId"] = speakers;
 

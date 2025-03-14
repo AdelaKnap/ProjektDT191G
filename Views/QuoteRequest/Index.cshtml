@@ -66,20 +66,20 @@
                     @Html.DisplayFor(modelItem => item.Message)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequestDate)
+                    @item.RequestDate.ToString("yyyy-MM-dd")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.IsProcessed)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Lecture.Name)
+                    @(item.Lecture?.Name ?? "Not assigned")
                 </td>
                 <td>
-                    @(item.Speaker?.Name ?? "Ej tilsatt")</td>
+                    @(item.Speaker?.Name ?? "Not assigned")
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.LectureId">Details</a>
+                    <a asp-action="Details" asp-route-id="@item.QuoteRequestId">Details</a>
 
-                    @if (User.IsInRole("Administrator"))
+                    @if (User.IsInRole("Administrator")) @* Endast admin ska ha åtkomst *@
                     {
                         <span> | </span>
                         <a asp-action="Edit" asp-route-id="@item.QuoteRequestId">Edit</a>
