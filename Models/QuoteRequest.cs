@@ -22,7 +22,7 @@ namespace ProjektDT191G.Models
         [Display(Name = "Lecture Address")]
         public string? Address { get; set; }
 
-        [Display(Name = "Message")]
+        [Display(Name = "Message (optional)")]
         public string? Message { get; set; }
 
         [Display(Name = "Request date")]

@@ -39,7 +39,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="LectureId" class="control-label">Select which lecture this applies to</label>
-                <select asp-for="LectureId" class ="form-control" asp-items="ViewBag.LectureId"></select>
+                <select asp-for="LectureId" class="form-control" asp-items="ViewBag.LectureId">
+                    <option value="" disabled selected>Select a lecture here</option>
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -48,10 +50,12 @@
     </div>
 </div>
 
-<div>
+@* <div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div> *@
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -1,13 +1,32 @@
-﻿@{
+﻿@model IEnumerable<ProjektDT191G.Models.Lecture>
+
+@{
     ViewData["Title"] = "Home Page";
+    var categories = ViewData["Categories"] as SelectList ?? new SelectList(Enumerable.Empty<SelectListItem>());
+    var selectedCategory = ViewData["SelectedCategory"]?.ToString();
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Introduktions text om företagets tjänster med fakta och bilder. Sen att skapa konto om du vill ta del av tips eller liknande.</del></p>
+    <p>Introduktions text om företagets tjänster med fakta och bilder.</p>
 </div>
 
-@* Kunna filtrera föreläsningar utifrån kategori med en dropdown.  *@
+<!-- Dropdown för att filtrera föreläsningar dynamiskt -->
+<form method="get" asp-action="Index">
+    <label for="categoryId">Choose a category:</label>
+    <select id="categoryId" name="categoryId" class="form-select" asp-items="categories" onchange="this.form.submit()">
+    </select>
+</form>
 
-@* Skriva ut föreläsningarna här med titel, beskrivning och pris.  *@
-
+<!-- Loopa genom föreläsningar -->
+@foreach (var lecture in Model)
+{
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">@lecture.Name</h5>
+            <p class="card-text">@lecture.Description</p>
+            <p class="card-text"><strong>Price:</strong> @lecture.Price</p>
+            <p class="card-text"><strong>Category:</strong> @lecture.Category?.Name</p>
+        </div>
+    </div>
+}
