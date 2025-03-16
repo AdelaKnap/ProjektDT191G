@@ -7,13 +7,13 @@
     var selectedCategory = ViewData["SelectedCategory"]?.ToString();
 }
 
-<div class="text-center">
-    <h1 class="display-4">LifeLine Academy</h1>
+<div class="banner-container d-flex align-items-center justify-content-center text-center">
+    <h1 class="banner-text text-white display-4 fw-bold">LifeLine Academy</h1>
 </div>
 
 <div class="container mt-5">
 
-    <div class="row">
+    <section class="row">
         <div class="col-md-6" style="line-height: 1.8;">
             <h2>Welcome to LifeLine Academy</h2>
             <p>We are a leading provider of life-saving training and emergency preparedness lectures. Founded in 2018,
@@ -41,18 +41,23 @@
             </div>
             <p>
                 <a class="highlight-text" asp-area="Identity" asp-page="/Account/Register">
-                    <strong>Register now to get expert tips on preparing your home for crisis situations for
-                        free!</strong>
+                    <strong>Register to get expert tips on preparing for crisis situations for free!</strong>
                 </a>
             </p>
         </div>
 
-    </div>
+        <div class="container mt-5">
+            <div class="row d-flex justify-content-center">
+                <div class="col-12 col-md-6 d-flex justify-content-center mb-3">
+                    <img src="~/images/cpradult.jpg" class="img-fluid" alt="CPR Adult">
+                </div>
+                <div class="col-12 col-md-6 d-flex justify-content-center mb-3">
+                    <img src="~/images/cprchild.jpg" class="img-fluid" alt="CPR Child">
+                </div>
+            </div>
+        </div>
 
-    <div class="text-center m-5">
-        <p style="font-size: 1.2em;"><strong>"Empowering everyone with life-saving skills for a safer world!"</strong>
-        </p>
-    </div>
+    </section>
 </div>
 
 <hr />
@@ -73,7 +78,7 @@
 <!-- Loopa genom föreläsningar -->
 @foreach (var lecture in Model)
 {
-    <div class="card mb-4">
+    <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h5 class="card-title text-center mb-3">@lecture.Name</h5>
             <p class="card-text mb-3">
@@ -103,10 +108,16 @@
 }
 
 <style>
+    .banner-container {
+        width: 100%;
+        height: 300px;
+        background-image: url('/images/picture1.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
     .card {
         background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         max-width: 700px;
         margin: 20px auto;
     }

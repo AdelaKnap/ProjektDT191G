@@ -25,7 +25,7 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3 p-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LifeLine Academy</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
@@ -37,38 +37,38 @@
                         <!-- Länkar som är tillgängliga för Admin och Speaker -->
                         @if (isAdmin || isSpeaker)
                         {
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home"
+                            <li class="nav-item"><a class="nav-link text-white" asp-controller="Home"
                                     asp-action="Index">Home</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home"
+                            <li class="nav-item"><a class="nav-link text-white" asp-controller="Home"
                                     asp-action="About">About</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Lecture"
+                            <li class="nav-item"><a class="nav-link text-white" asp-controller="Lecture"
                                     asp-action="Index">Lectures</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Category"
+                            <li class="nav-item"><a class="nav-link text-white" asp-controller="Category"
                                     asp-action="Index">Categories</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Speaker"
+                            <li class="nav-item"><a class="nav-link text-white" asp-controller="Speaker"
                                     asp-action="Index">Speakers</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="QuoteRequest"
-                                    asp-action="Index">QuoteRequests</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" asp-controller="QuoteRequest"
+                                    asp-action="Index">Quote Requests</a></li>
                         }
 
                         <!-- Länkar som är tillgängliga för inloggade användare -->
                         @if (isSignedIn && !isAdmin && !isSpeaker)
                         {
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home"
+                            <li class="nav-item"><a class="nav-link text-white" asp-controller="Home"
                                     asp-action="Index">Home</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home"
+                            <li class="nav-item"><a class="nav-link text-white" asp-controller="Home"
                                     asp-action="About">About</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="QuoteRequest"
-                                    asp-action="Create">QuoteRequests</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" asp-controller="QuoteRequest"
+                                    asp-action="Create">Quote Requests</a></li>
                         }
 
                         <!-- Länkar för icke-inloggade användare -->
                         @if (!isSignedIn)
                         {
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home"
+                            <li class="nav-item"><a class="nav-link text-white" asp-controller="Home"
                                     asp-action="Index">Home</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="QuoteRequest"
-                                    asp-action="Create">QuoteRequests</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" asp-controller="QuoteRequest"
+                                    asp-action="Create">Quote Requests</a></li>
                         }
                     </ul>
 
@@ -83,7 +83,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted text-center">
+    <footer class="border-top footer bg-dark text-white text-center">
         <div class="container">
             ProjektDT191G &copy; Adela Knap 2025
         </div>

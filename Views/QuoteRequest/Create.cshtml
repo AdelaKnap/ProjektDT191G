@@ -4,55 +4,70 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div class="container">
+    <h1 class="text-center my-5">Quote Request</h1>
 
-<h4>QuoteRequest</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <p class="text-center mb-5">
+                We’re excited to hear from you!<br>
+                Please fill in your details below, select the lecture you're interested
+                in, and feel free to leave a message with any additional requests or information.<br> Our team will
+                carefully review your request and get back to you via email as soon as possible with more details,
+                pricing, and how we can best assist you.<br>
+                We look forward to connecting with you!
+            </p>
+
+            <div class="shadow-lg p-4 border rounded bg-white">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Message" class="control-label"></label>
+                        <textarea asp-for="Message" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="LectureId" class="control-label">Select which lecture this applies to</label>
+                        <select asp-for="LectureId" class="form-control" asp-items="ViewBag.LectureId">
+                            <option value="" disabled selected>Select a lecture here</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <input type="submit" value="Submit Request" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Message" class="control-label"></label>
-                <input asp-for="Message" class="form-control" />
-                <span asp-validation-for="Message" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LectureId" class="control-label">Select which lecture this applies to</label>
-                <select asp-for="LectureId" class="form-control" asp-items="ViewBag.LectureId">
-                    <option value="" disabled selected>Select a lecture here</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+
+        </div>
     </div>
 </div>
-
-@* <div>
-    <a asp-action="Index">Back to List</a>
-</div> *@
 
 @section Scripts {
     @{
