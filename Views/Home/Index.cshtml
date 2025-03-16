@@ -2,31 +2,127 @@
 
 @{
     ViewData["Title"] = "Home Page";
+
     var categories = ViewData["Categories"] as SelectList ?? new SelectList(Enumerable.Empty<SelectListItem>());
     var selectedCategory = ViewData["SelectedCategory"]?.ToString();
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Introduktions text om företagets tjänster med fakta och bilder.</p>
+    <h1 class="display-4">LifeLine Academy</h1>
 </div>
 
-<!-- Dropdown för att filtrera föreläsningar dynamiskt -->
-<form method="get" asp-action="Index">
-    <label for="categoryId">Choose a category:</label>
-    <select id="categoryId" name="categoryId" class="form-select" asp-items="categories" onchange="this.form.submit()">
-    </select>
-</form>
+<div class="container mt-5">
+
+    <div class="row">
+        <div class="col-md-6" style="line-height: 1.8;">
+            <h2>Welcome to LifeLine Academy</h2>
+            <p>We are a leading provider of life-saving training and emergency preparedness lectures. Founded in 2018,
+                our mission has always been to equip individuals and organizations with the skills and knowledge
+                necessary to respond effectively in critical situations. Over the years, we’ve trained thousands of
+                individuals, from parents and teachers to healthcare professionals and corporate teams, ensuring they
+                are prepared to handle emergencies with confidence.</p>
+            <p>Our team of expert instructors brings years of experience, offering training that
+                is not only informative but also hands-on and interactive. We believe in providing a learning experience
+                that empowers participants to act quickly and effectively in life-threatening situations. Whether it’s
+                CPR, First Aid, or Crisis and Disaster Preparedness, our instructors guide every participant step by
+                step, ensuring they leave feeling confident and capable.
+            </p>
+        </div>
+
+        <div class="col-md-6" style="line-height: 1.8;">
+            <h2>Our Pricing Structure</h2>
+            <p>All of our lectures have a base price, which covers the cost of the lectures and training itself.
+                However,
+                the total cost of the course can vary depending on factors such as the location, venue, and travel
+                requirements for our instructors.</p>
+            <div class="alert alert-warning" role="alert">
+                <strong>Important:</strong> The displayed price covers only the lecture itself. Additional costs will
+                apply based on location, venue and instructor travel.
+            </div>
+            <p>
+                <a class="highlight-text" asp-area="Identity" asp-page="/Account/Register">
+                    <strong>Register now to get expert tips on preparing your home for crisis situations for
+                        free!</strong>
+                </a>
+            </p>
+        </div>
+
+    </div>
+
+    <div class="text-center m-5">
+        <p style="font-size: 1.2em;"><strong>"Empowering everyone with life-saving skills for a safer world!"</strong>
+        </p>
+    </div>
+</div>
+
+<hr />
+
+<div class="container mt-5">
+    <h2 class="text-center display-5 mb-4">Our Lectures</h2>
+
+    <!-- Dropdown för att filtrera föreläsningar dynamiskt -->
+    <form method="get" asp-action="Index" class="d-flex justify-content-center m-4">
+        <label for="categoryId" class="me-2 align-self-center">Choose a category:</label>
+        <select id="categoryId" name="categoryId" class="form-select w-auto" asp-items="categories"
+            onchange="this.form.submit()">
+        </select>
+    </form>
+
+</div>
 
 <!-- Loopa genom föreläsningar -->
 @foreach (var lecture in Model)
 {
     <div class="card mb-4">
         <div class="card-body">
-            <h5 class="card-title">@lecture.Name</h5>
-            <p class="card-text">@lecture.Description</p>
-            <p class="card-text"><strong>Price:</strong> @lecture.Price</p>
-            <p class="card-text"><strong>Category:</strong> @lecture.Category?.Name</p>
+            <h5 class="card-title text-center mb-3">@lecture.Name</h5>
+            <p class="card-text mb-3">
+                @if (lecture.Description?.Length > 532)
+                {
+                    @lecture.Description.Substring(0, 532)
+
+                    <span>...</span>
+                }
+                else
+                {
+                    @lecture.Description
+                }
+            </p>
+            <p class="card-text mb-2">
+                <strong>Price:</strong> $@lecture.Price
+                <span class="badge bg-warning text-dark">Excludes additional costs</span>
+            </p>
+            <p class="card-text mb-4"><strong>Category:</strong> @lecture.Category?.Name</p>
+            <div class="d-flex justify-content-between">
+                <a asp-controller="Lecture" asp-action="Details" asp-route-id="@lecture.LectureId"
+                    class="btn btn-outline-primary">Read more</a>
+                <a asp-controller="QuoteRequest" asp-action="Create" class="btn btn-primary">Request a Quote</a>
+            </div>
         </div>
     </div>
 }
+
+<style>
+    .card {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        margin: 20px auto;
+    }
+
+    .card-body p {
+        max-width: 65ch;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .highlight-text {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .highlight-text:hover {
+        text-decoration: underline;
+    }
+</style>

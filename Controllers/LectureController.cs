@@ -31,7 +31,6 @@ namespace ProjektDT191G.Controllers
         }
 
         // GET: Lecture/Details/5
-        [Authorize(Roles = "Administrator, Speaker")]   // Admin och Speaker ska komma åt get
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
