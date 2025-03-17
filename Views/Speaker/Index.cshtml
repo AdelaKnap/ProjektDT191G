@@ -4,43 +4,43 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Speakers</h1>
 
 @if (User.IsInRole("Administrator"))
 {
     <p>
-        <a asp-action="Create">Create New</a>
+        <a class="btn btn-primary mt-3" asp-action="Create">Create New</a>
     </p>
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="table-responsive">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.SpeakerId">Details</a>
-
-                    @if (User.IsInRole("Administrator"))     @* Endast admin ska ha åtkomst *@
-                    {
-                        <span> | </span>
-                        <a asp-action="Edit" asp-route-id="@item.SpeakerId">Edit</a>
-                        <span> | </span>
-                        <a asp-action="Delete" asp-route-id="@item.SpeakerId">Delete</a>
-                    }
-                </td>
+                <th>Name</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td data-label="Name">@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td data-label="Actions">
+                        <a class="btn btn-sm btn-outline-success" asp-action="Details"
+                            asp-route-id="@item.SpeakerId">Details</a>
+
+                        @if (User.IsInRole("Administrator")) @* Endast admin ska ha åtkomst *@
+                        {
+                            <span> | </span>
+                            <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@item.SpeakerId">Edit</a>
+                            <span> | </span>
+                            <a class="btn btn-sm btn-outline-danger" asp-action="Delete"
+                                asp-route-id="@item.SpeakerId">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

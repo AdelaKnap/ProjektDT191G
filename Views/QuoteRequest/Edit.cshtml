@@ -4,41 +4,42 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
 
-<h4>QuoteRequest</h4>
+<h1 class="text-center mb-3">Edit Qute Request</h1>
+
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row justify-content-center">
+    <div class="col-md-5">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="QuoteRequestId" />
-            <div class="form-group">
+
+            <div class="form-group mb-3">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="Phone" class="control-label"></label>
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="Address" class="control-label"></label>
                 <input asp-for="Address" class="form-control" />
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="Message" class="control-label"></label>
                 <input asp-for="Message" class="form-control" />
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="RequestDate" class="control-label"></label>
                 <input asp-for="RequestDate" class="form-control" type="date" />
                 <span asp-validation-for="RequestDate" class="text-danger"></span>
@@ -49,25 +50,26 @@
                     model.IsProcessed)
                 </label>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="LectureId" class="control-label">Lecture</label>
                 <select asp-for="LectureId" class="form-control" asp-items="ViewBag.LectureId"></select>
                 <span asp-validation-for="LectureId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="SpeakerId" class="control-label">Speaker</label>
                 <select asp-for="SpeakerId" class="form-control" asp-items="ViewBag.SpeakerId"></select>
                 <span asp-validation-for="SpeakerId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+
+            <div class="form-group mt-4">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="text-center mt-4">
+    <a class="btn btn-secondary" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

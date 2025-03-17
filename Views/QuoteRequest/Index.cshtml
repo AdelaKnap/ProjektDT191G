@@ -4,90 +4,79 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-center mb-3">Quote Requests</h1>
 
 @if (User.IsInRole("Administrator"))
 {
-    <p>
-        <a asp-action="Create">Create New</a>
+    <p class="text-center">
+        <a class="btn btn-primary mt-3" asp-action="Create">Create New</a>
     </p>
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Message)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RequestDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsProcessed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Lecture)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Speaker)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="table-responsive">
+    <table class="table-quote">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Phone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Message)
-                </td>
-                <td>
-                    @item.RequestDate.ToString("yyyy-MM-dd")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsProcessed)
-                </td>
-                <td>
-                    @(item.Lecture?.Name ?? "Not assigned")
-                </td>
-                <td>
-                    @(item.Speaker?.Name ?? "Not assigned")
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.QuoteRequestId">Details</a>
-
-                    @if (User.IsInRole("Administrator")) @* Endast admin ska ha åtkomst *@
-                    {
-                        <span> | </span>
-                        <a asp-action="Edit" asp-route-id="@item.QuoteRequestId">Edit</a>
-                        <span> | </span>
-                        <a asp-action="Delete" asp-route-id="@item.QuoteRequestId">Delete</a>
-                    }
-                </td>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Lecture Address</th>
+                <th>Message</th>
+                <th>Request date</th>
+                <th>Processed</th>
+                <th>Lecture</th>
+                <th>Speaker</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td data-label="Name">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td data-label="Email">
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td data-label="Phone">
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td data-label="Lecture Address">
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td data-label="Message">
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>
+                    <td data-label="Request date">
+                        @item.RequestDate.ToString("yyyy-MM-dd")
+                    </td>
+                    <td data-label="Processed">
+                        @Html.DisplayFor(modelItem => item.IsProcessed)
+                    </td>
+                    <td data-label="Lecture">
+                        @(item.Lecture?.Name ?? "Not assigned")
+                    </td>
+                    <td data-label="Speaker">
+                        @(item.Speaker?.Name ?? "Not assigned")
+                    <td data-label="Actions">
+                        <a class="btn btn-sm btn-outline-success" asp-action="Details"
+                            asp-route-id="@item.QuoteRequestId">Details</a>
+
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <span> | </span>
+                            <a class="btn btn-sm btn-outline-primary" asp-action="Edit"
+                                asp-route-id="@item.QuoteRequestId">Edit</a>
+                            <span> | </span>
+                            <a class="btn btn-sm btn-outline-danger" asp-action="Delete"
+                                asp-route-id="@item.QuoteRequestId">Delete</a>
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

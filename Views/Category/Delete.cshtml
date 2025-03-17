@@ -4,10 +4,10 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<h1>Delete Category</h1>
 
-<h3>Are you sure you want to delete this?</h3>
-<p>Meddelande att ej radera om det finns föreläsningar knutna..</p>
+<h2 class="text-danger mb-3">You can't delete a category if there are lectures associated with it!</h2>
+
 <div>
     <h4>Category</h4>
     <hr />
@@ -29,7 +29,7 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="CategoryId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <a class="btn btn-secondary" asp-action="Index">Back to List</a>
     </form>
 
     @* Meddelande om att det inte går att radera vid relation till föreläsning *@
