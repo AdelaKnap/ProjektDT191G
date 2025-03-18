@@ -9,7 +9,7 @@
 @if (User.IsInRole("Administrator"))
 {
     <p class="text-center">
-        <a class="btn btn-primary mt-3" asp-action="Create">Create New</a>
+        <a class="btn btn-primary mt-3 mb-3" asp-action="Create">Create New</a>
     </p>
 }
 
@@ -60,6 +60,7 @@
                     </td>
                     <td data-label="Speaker">
                         @(item.Speaker?.Name ?? "Not assigned")
+                    </td>
                     <td data-label="Actions">
                         <a class="btn btn-sm btn-outline-success" asp-action="Details"
                             asp-route-id="@item.QuoteRequestId">Details</a>

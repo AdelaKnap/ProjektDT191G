@@ -30,6 +30,7 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
+            // Hämtar offerter och inkluderar relaterade föreläsningar och föreläsare
             var applicationDbContext = _context.QuoteRequests.Include(q => q.Lecture).Include(q => q.Speaker);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -49,6 +50,7 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
+            // Hämta utifrån id och inkludera relaterade föreläsningar och föreläsare
             var quoteRequest = await _context.QuoteRequests
                 .Include(q => q.Lecture)
                 .Include(q => q.Speaker)
@@ -64,6 +66,7 @@ namespace ProjektDT191G.Controllers
         // GET: QuoteRequest/Create
         public IActionResult Create()
         {
+            // Skapa dropdown-listor för föreläsningar och föreläsare
             ViewData["LectureId"] = new SelectList(_context.Lectures, "LectureId", "Name");
             ViewData["SpeakerId"] = new SelectList(_context.Speakers, "SpeakerId", "Name", null);
             return View();
@@ -76,6 +79,7 @@ namespace ProjektDT191G.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Dagens datum som förfrågans datum
                 quoteRequest.RequestDate = DateTime.Now;
 
                 _context.Add(quoteRequest);
@@ -113,6 +117,7 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
+            // Dropdown-listor för föreläsningar och föreläsare
             ViewData["LectureId"] = new SelectList(_context.Lectures, "LectureId", "Name", quoteRequest.LectureId);
 
             if (_context.Speakers == null)
@@ -120,14 +125,14 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
-            // lista med alternativet "Ej tillsatt"
+            // Listan med alternativet "Not assigned"
             var speakers = _context.Speakers
                 .Select(s => new SelectListItem
                 {
                     Value = s.SpeakerId.ToString(),
                     Text = s.Name
                 }).ToList();
-            speakers.Insert(0, new SelectListItem { Value = "", Text = "Uncategorized" });
+            speakers.Insert(0, new SelectListItem { Value = null, Text = "Not assigned" });
 
             ViewData["SpeakerId"] = speakers;
 

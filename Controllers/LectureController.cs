@@ -59,6 +59,7 @@ namespace ProjektDT191G.Controllers
         [Authorize(Roles = "Administrator")]   // Endast admin har åtkomst
         public IActionResult Create()
         {
+            // till dropdown-listan
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name");
             return View();
         }

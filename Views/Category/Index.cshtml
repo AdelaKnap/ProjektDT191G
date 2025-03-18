@@ -4,12 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Categories</h1>
+<h1 class="text-center mb-3">Categories</h1>
 
 @if (User.IsInRole("Administrator"))
 {
-    <p>
-        <a class="btn btn-primary mt-3" asp-action="Create">Create New</a>
+    <p class="text-center">
+        <a class="btn btn-primary mt-3 mb-3" asp-action="Create">Create New</a>
     </p>
 }
 

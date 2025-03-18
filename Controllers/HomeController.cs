@@ -22,6 +22,7 @@ namespace ProjektDT191G.Controllers
 
         public async Task<IActionResult> Index(int? categoryId)
         {
+             // Kontrollera om kategorier finns i databasen
             if (_context.Categories == null)
             {
                 return NotFound();

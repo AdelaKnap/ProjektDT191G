@@ -37,7 +37,7 @@ namespace ProjektDT191G.Models
         public int? LectureId { get; set; }
         public Lecture? Lecture { get; set; }
 
-        // Koppling till föreläsare (null från start)
+        // Koppling till föreläsare
         public int? SpeakerId { get; set; }
         public Speaker? Speaker { get; set; }
 

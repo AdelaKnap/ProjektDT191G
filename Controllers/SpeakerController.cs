@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -174,18 +170,9 @@ namespace ProjektDT191G.Controllers
                 return NotFound();
             }
 
-            // var speaker = await _context.Speakers.FindAsync(id);
-            // if (speaker != null)
-            // {
-            //     _context.Speakers.Remove(speaker);
-            // }
-
-            // await _context.SaveChangesAsync();
-            // return RedirectToAction(nameof(Index));
-
-                var speaker = await _context.Speakers
-                .Include(q => q.QuoteRequests)          // Offerter kopplade till föreläsaren
-                .FirstOrDefaultAsync(q => q.SpeakerId == id);
+            var speaker = await _context.Speakers
+            .Include(q => q.QuoteRequests)          // Offerter kopplade till föreläsaren
+            .FirstOrDefaultAsync(q => q.SpeakerId == id);
 
             if (speaker != null)
             {
